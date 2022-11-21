@@ -1,2 +1,2 @@
 # PR-Music-Demo
-Demo for future music streaming web app project. 
+Music Streaming Web Aplication with working REST API, SQL Database, and Blazor UI.
