@@ -1,0 +1,96 @@
+﻿@page "/albums/create"
+@using PRMusic_UI.Services.Contracts
+@inject NavigationManager _navigationManager 
+@inject IAlbumService _repo
+
+
+
+
+@if(album == null){
+<form @onsubmit="CreateAlbum">
+  <label for="fname">Single?</label>
+  <input type="text" id="fname" name="fname" @bind-value="newAlbum.ReleaseDate"><br>
+  <label for="lname">Genre</label>
+  <input type="text" id="lname" name="lname" @bind-value="newAlbum.Genre" ><br>
+  
+  @*<label for="cb">Created By:</label>
+  <input type="text" id="cb" name="cb" @bind-value="newUser.CreatedBy" ><br>*@
+  <input type="submit" value="Submit">
+</form>
+}
+
+
+
+
+@if(response != null)
+{
+    <h3>@response</h3>
+}
+
+
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+.button {
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.button1 {background-color: #4CAF50;} /* Green */
+.button2 {background-color: #008CBA;} /* Blue */
+</style>
+
+
+@code{
+
+    [Parameter]
+
+    public Guid Id { get; set; }
+
+    public AlbumDto album { get; set; }
+
+    public AlbumDto newAlbum = new AlbumDto();
+
+    public string? response { get; set; } 
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        album = null;
+    }
+   
+
+
+    protected async Task<string?> CreateAlbum()
+     {
+        newAlbum = await _repo.CreateAlbum(newAlbum);
+
+        if(newAlbum != null)
+        {
+            response = "Record could not be created";
+        }
+        return response = "Record was successfully created";
+    }
+
+
+}

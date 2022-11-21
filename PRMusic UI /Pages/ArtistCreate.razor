@@ -1,0 +1,93 @@
+﻿@page "/artists/create"
+@using PRMusic_UI.Services.Contracts
+@inject NavigationManager _navigationManager 
+@inject IArtistService _repo
+
+
+
+
+@if(artist == null){
+<form @onsubmit="CreateArtist">
+  <label for="fname">About:</label>
+  <input type="text" id="fname" name="fname" @bind-value="newArtist.About"><br>
+  <label for="fname">About:</label>
+  <input type="text" id="fname" name="fname" @bind-value="newArtist.ArtistName"><br>
+  <input type="submit" value="Submit">
+</form>
+}
+
+
+
+
+@if(response != null)
+{
+    <h3>@response</h3>
+}
+
+
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+.button {
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.button1 {background-color: #4CAF50;} /* Green */
+.button2 {background-color: #008CBA;} /* Blue */
+</style>
+
+
+@code{
+
+    [Parameter]
+
+    public Guid Id { get; set; }
+
+    public ArtistDto artist { get; set; }
+
+    public ArtistDto newArtist = new ArtistDto();
+
+    public string? response { get; set; } 
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        artist = null;
+    }
+   
+
+
+    protected async Task<string?> CreateArtist()
+     {
+        newArtist = await _repo.CreateArtist(newArtist);
+
+        if(newArtist != null)
+        {
+            response = "Record could not be created";
+        }
+        return response = "Record was successfully created";
+    }
+
+
+}

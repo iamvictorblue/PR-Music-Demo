@@ -1,0 +1,85 @@
+﻿@page "/uploads/update/{id:guid}"
+@using PRMusic_UI.Services.Contracts
+@inject NavigationManager _navigationManager 
+@inject IUploadService _repo
+
+
+
+@if(upload != null){
+<form @onsubmit="UpdateUpload">
+  <label for="fname">Song Id</label><br>
+  <input type="text" id="fname" name="fname" @bind-value="upload.SongId"><br>
+  <input type="submit" value="Submit">
+</form> 
+}
+
+@if(response != null)
+{
+    <h3>@response</h3>
+}
+
+
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+.button {
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.button1 {background-color: #4CAF50;} /* Green */
+.button2 {background-color: #008CBA;} /* Blue */
+</style>
+
+
+@code{
+
+    [Parameter]
+    public Guid Id { get; set; }
+
+    public UploadDto upload{ get; set; }
+
+    public string? response { get; set; } 
+
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        upload = await _repo.GetUploadById(Id);
+    }
+
+
+
+    protected async Task<string?> UpdateUpload()
+    {
+        upload = await _repo.UpdateUpload(upload);
+
+        if(upload != null)
+        {
+            response = "Record could not be updated";
+        }
+        return response = "Record was successfully updated";
+    }
+
+
+}

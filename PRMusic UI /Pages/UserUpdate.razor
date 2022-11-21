@@ -1,0 +1,91 @@
+﻿@page "/users/update/{id:guid}"
+@using PRMusic_UI.Services.Contracts
+@inject NavigationManager _navigationManager 
+@inject IUserService _repo
+
+
+
+@if(user != null){
+<form @onsubmit="UpdateUser">
+  <label for="fname">First Name</label><br>
+  <input type="text" id="fname" name="fname" @bind-value="user.FirstName"><br>
+  <label for="fname">Last Name</label><br>
+  <input type="text" id="fname" name="fname" @bind-value="user.LastName"><br>
+  <label for="fname">Email</label><br>
+  <input type="text" id="fname" name="fname" @bind-value="user.Email"><br>
+  <label for="fname">Password</label><br>
+  <input type="text" id="fname" name="fname" @bind-value="user.Password"><br>
+  <input type="submit" value="Submit">
+</form> 
+}
+
+@if(response != null)
+{
+    <h3>@response</h3>
+}
+
+
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+.button {
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.button1 {background-color: #4CAF50;} /* Green */
+.button2 {background-color: #008CBA;} /* Blue */
+</style>
+
+
+@code{
+
+    [Parameter]
+
+    public Guid Id { get; set; }
+
+    public UserDto user { get; set; }
+
+    public string? response { get; set; } 
+
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        user = await _repo.GetUserById(Id);
+    }
+
+
+    protected async Task<string?> UpdateUser()
+    {
+        user = await _repo.UpdateUser(user);
+
+        if(user != null)
+        {
+            response = "Record could not be updated";
+        }
+        return response = "Record was successfully updated";
+    }
+
+
+}

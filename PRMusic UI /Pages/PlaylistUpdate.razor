@@ -1,0 +1,90 @@
+﻿@page "/playlists/update/{id:guid}"
+@using PRMusic_UI.Services.Contracts
+@inject NavigationManager _navigationManager 
+@inject IPlaylistService _repo
+
+
+
+@if(playlist != null){
+
+<form @onsubmit="UpdatePlaylist">
+ 
+  <label for="fname">Followers</label><br>
+  <input type="text" id="fname" name="fname" @bind-value="playlist.Followers"><br>
+  <input type="submit" value="Submit">
+
+</form> 
+
+}
+
+@if(response != null)
+{
+    <h3>@response</h3>
+}
+
+
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+.button {
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.button1 {background-color: #4CAF50;} /* Green */
+.button2 {background-color: #008CBA;} /* Blue */
+</style>
+
+
+@code{
+
+    [Parameter]
+    
+    public Guid Id { get; set; }
+
+    public PlaylistDto playlist { get; set; }
+
+    public string? response { get; set; } 
+
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        playlist = await _repo.GetPlaylistById(Id);
+    }
+
+
+
+    protected async Task<string?> UpdatePlaylist()
+    {
+        playlist = await _repo.UpdatePlaylist(playlist);
+
+        if(playlist != null)
+        {
+            response = "Record could not be updated";
+        }
+        return response = "Record was successfully updated";
+    }
+
+
+}

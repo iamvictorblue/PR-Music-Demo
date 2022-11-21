@@ -1,0 +1,97 @@
+﻿@page "/users/create"
+@using PRMusic_UI.Services.Contracts
+@inject NavigationManager _navigationManager 
+@inject IUserService _repo
+
+
+
+
+@if(user == null){
+<form @onsubmit="CreateUser">
+  <label for="fname">First name:</label>
+  <input type="text" id="fname" name="fname" @bind-value="newUser.FirstName"><br>
+  <label for="lname">Last name:</label>
+  <input type="text" id="lname" name="lname" @bind-value="newUser.LastName" ><br>
+  <label for="email">Email:</label>
+  <input type="text" id="email" name="email" @bind-value="newUser.Email" ><br>
+  <label for="pword">Password:</label>
+  <input type="text" id="pword" name="pword" @bind-value="newUser.Password" ><br>
+  <input type="submit" value="Submit">
+</form>
+}
+
+
+
+
+@if(response != null)
+{
+    <h3>@response</h3>
+}
+
+
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+.button {
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.button1 {background-color: #4CAF50;} /* Green */
+.button2 {background-color: #008CBA;} /* Blue */
+</style>
+
+
+@code{
+
+    [Parameter]
+
+    public Guid Id { get; set; }
+
+    public UserDto user { get; set; }
+
+    public UserDto newUser = new UserDto();
+
+    public string? response { get; set; } 
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        user = null;
+    }
+   
+
+
+    protected async Task<string?> CreateUser()
+     {
+        newUser = await _repo.CreateUser(newUser);
+
+        if(newUser == null)
+        {
+            response = "Record could not be created";
+        }
+        return response = "Record was successfully created";
+    }
+
+
+}

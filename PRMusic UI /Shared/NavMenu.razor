@@ -1,0 +1,71 @@
+﻿<div class="top-row ps-3 navbar navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="">PRMusic</a>
+        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</div>
+
+<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+    <nav class="flex-column">
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="albums" Match="NavLinkMatch.All">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Albums
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="artists">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Artists
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="genres">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Genres
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="playlists">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Playlists
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="songplayers">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> SongPlayers
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="songs">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Songs
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="uploads">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Uploads
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Users
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="player">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Player
+            </NavLink>
+        </div>
+
+    </nav>
+</div>
+
+@code {
+    private bool collapseNavMenu = true;
+
+    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+
+}

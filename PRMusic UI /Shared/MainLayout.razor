@@ -1,0 +1,32 @@
+﻿@inherits LayoutComponentBase
+<body>
+    <style>
+        body{
+    background-image: url('images/trippy.gif');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+    background-color: lightblue;
+    background-blend-mode: screen;
+    
+}
+    </style>
+    
+
+    <div class="page">
+        <div class="sidebar">
+            <NavMenu/>
+        </div>
+
+        <main>
+            <div class="top-row px-4">
+                <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+            </div>
+
+            <article class="content px-4">
+
+                @Body          
+            </article>
+        </main>
+    </div>
+</body>
